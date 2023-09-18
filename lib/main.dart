@@ -25,7 +25,7 @@ class BudgetBuddy extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Budget Buddy',
         getPages: AppRoutes.pages,
-        initialRoute: AppRoutes.loginScreen,
+        initialRoute: AppRoutes.homeScreen,
       ),
     );
   }

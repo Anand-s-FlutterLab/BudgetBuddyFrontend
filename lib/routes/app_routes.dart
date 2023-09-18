@@ -1,3 +1,4 @@
+import 'package:budget_buddy/screens/home_screen.dart';
 import 'package:budget_buddy/screens/login_screen.dart';
 import 'package:budget_buddy/screens/signup_screen.dart';
 import 'package:budget_buddy/screens/splash_screen.dart';
@@ -8,6 +9,7 @@ class AppRoutes {
   static String splashScreen = "/splash_screen";
   static String loginScreen = "/login_screen";
   static String signupScreen = "/signup_screen";
+  static String homeScreen = "/home_screen";
 
   static List<GetPage> pages = [
     GetPage(
@@ -24,6 +26,12 @@ class AppRoutes {
     GetPage(
       name: signupScreen,
       page: () => const SignupScreen(),
+      bindings: const [],
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: homeScreen,
+      page: () => const HomeScreen(),
       bindings: const [],
       transition: Transition.rightToLeft,
     ),
