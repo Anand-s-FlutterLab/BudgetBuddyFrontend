@@ -1,4 +1,6 @@
 import 'package:budget_buddy/core/app_export.dart';
+import 'package:budget_buddy/provider/add_income_expense_provider.dart';
+import 'package:budget_buddy/provider/home_provider.dart';
 import 'package:budget_buddy/provider/login_provider.dart';
 import 'package:budget_buddy/provider/signup_provider.dart';
 import 'package:get/get.dart';
@@ -20,12 +22,18 @@ class BudgetBuddy extends StatelessWidget {
         ChangeNotifierProvider<SignupProvider>(
           create: (context) => SignupProvider(),
         ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (context) => HomeProvider(),
+        ),
+        ChangeNotifierProvider<AddIncomeExpenseProvider>(
+          create: (context) => AddIncomeExpenseProvider(),
+        ),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Budget Buddy',
         getPages: AppRoutes.pages,
-        initialRoute: AppRoutes.homeScreen,
+        initialRoute: AppRoutes.splashScreen,
       ),
     );
   }

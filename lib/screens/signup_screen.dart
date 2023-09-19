@@ -1,7 +1,6 @@
 import 'package:budget_buddy/core/app_export.dart';
 import 'package:budget_buddy/core/utils/validation_function.dart';
 import 'package:budget_buddy/provider/signup_provider.dart';
-import 'package:get/get.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:budget_buddy/core/app_export.dart';
-import 'package:budget_buddy/core/constant/home_listview_items.dart';
+import 'package:budget_buddy/provider/home_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,179 +8,250 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: height * 0.06,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Consumer<HomeProvider>(
+        builder: (context, homeProvider, child) {
+          if (homeProvider.isGettingUserIncomeExpense) {
+            return Center(
+              child: customPageLoadingAnimation(size: height * 0.1),
+            );
+          } else {
+            final currentMonthData =
+                homeProvider.monthlyBudget.months[currentMonthYear];
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  customText(
-                    text: "Hello Anand",
-                    fontSize: width * 0.08,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
+                  SizedBox(
+                    height: height * 0.06,
                   ),
-                  Container(
-                    height: width * 0.12,
-                    width: width * 0.12,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      shape: BoxShape.circle,
-                      image: const DecorationImage(
-                        image: NetworkImage(
-                          "https://cdn3d.iconscout.com/3d/premium/thumb/profile-6335655-5220669.png?f=webp",
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                width: width,
-                height: height * 0.26,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black45,
-                      blurRadius: 5,
-                      offset: Offset(10, 10),
-                    )
-                  ],
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                      "https://cdn.wallpapersafari.com/81/23/Cwk3He.jpg",
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    cardRowTextBuilder(
-                        text1: "Your Balance",
-                        text2: "December, 2023",
-                        fontSize1: width * 0.06),
-                    customText(
-                      color: whiteColor,
-                      text: "₹ 15,000",
-                      fontWeight: FontWeight.w500,
-                      fontSize: width * 0.1,
-                    ),
-                    const Spacer(),
-                    Row(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        cardColumnTextBuilder(
-                          text1: "Spent",
-                          text2: "₹ 5000",
+                        customText(
+                          text: "Hello $userName",
+                          fontSize: width * 0.08,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
                         ),
-                        cardColumnTextBuilder(
-                          text1: "Available",
-                          text2: "₹ 300",
+                        Container(
+                          height: width * 0.12,
+                          width: width * 0.12,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.person_3,
+                            color: blackColor,
+                            size: height * 0.04,
+                          ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: height * 0.01,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: height * 0.05,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: customText(
-                color: blackColor,
-                fontWeight: FontWeight.w500,
-                fontSize: width * 0.08,
-                text: "Monthly Expenditure",
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.only(left: 10, right: 20),
-                  height: height * 0.1,
-                  width: width,
-                  decoration: AppDecoration.containerBoxDecoration(),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: width * 0.15,
-                        height: width * 0.15,
-                        decoration: BoxDecoration(
-                          color: homeListViewItems[index].color,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Image(
-                          image: AssetImage(homeListViewItems[index].image),
-                          width: width * 0.1,
-                          height: width * 0.1,
-                          fit: BoxFit.scaleDown,
+                  ),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      width: width,
+                      height: height * 0.26,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black45,
+                            blurRadius: 5,
+                            offset: Offset(10, 10),
+                          )
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(cardBackgroundImage),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      SizedBox(
-                        width: width * 0.04,
-                      ),
-                      customText(
-                        color: blackColor,
-                        text: homeListViewItems[index].title,
-                        fontSize: width * 0.06,
-                      ),
-                      const Spacer(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          cardRowTextBuilder(
+                              text1: "Your Balance",
+                              text2: currentMonthYear,
+                              fontSize1: width * 0.06),
                           customText(
-                            color: blackColor,
-                            text: "Hello",
-                            fontSize: width * 0.07,
+                            color: whiteColor,
+                            text:
+                                "$rupeeSymbol ${currentMonthData!.income - currentMonthData.expense}",
+                            fontWeight: FontWeight.w500,
+                            fontSize: width * 0.08,
                           ),
-                          customText(
-                            color: greyColor,
-                            text: "20%",
-                            fontSize: width * 0.05,
+                          const Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              cardColumnTextBuilder(
+                                text1: "Spent",
+                                text2:
+                                    "$rupeeSymbol ${currentMonthData.expense}",
+                              ),
+                              cardColumnTextBuilder(
+                                text1: "Income",
+                                text2:
+                                    "$rupeeSymbol ${currentMonthData.income}",
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: height * 0.01,
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.05,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: width * 0.05),
+                    alignment: Alignment.centerLeft,
+                    child: customText(
+                      color: blackColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: width * 0.06,
+                      text: "Monthly Expenditure",
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.02,
+                  ),
+                  ListView(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      if (currentMonthData.housing > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.yellow.shade100,
+                          image: homeListHouse,
+                          title: "Housing",
+                          spentMoney: currentMonthData.housing,
+                          percentage: ((currentMonthData.housing * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.transportation > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.blue.shade50,
+                          image: homeListTransportation,
+                          title: "Transportation",
+                          spentMoney: currentMonthData.transportation,
+                          percentage: ((currentMonthData.transportation * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.food > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.red.shade50,
+                          image: homeListFood,
+                          title: "Food",
+                          spentMoney: currentMonthData.food,
+                          percentage: ((currentMonthData.food * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.utilities > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.grey.shade200,
+                          image: homeListUtilities,
+                          title: "Utilities",
+                          spentMoney: currentMonthData.utilities,
+                          percentage: ((currentMonthData.utilities * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.healthcare > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.green.shade50,
+                          image: homeListHealthcare,
+                          title: "Healthcare",
+                          spentMoney: currentMonthData.healthcare,
+                          percentage: ((currentMonthData.healthcare * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.entertainment > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.pink.shade50,
+                          image: homeListEntertainment,
+                          title: "Entertainment",
+                          spentMoney: currentMonthData.entertainment,
+                          percentage: ((currentMonthData.entertainment * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.education > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.blueGrey.shade100,
+                          image: homeListEducation,
+                          title: "Education",
+                          spentMoney: currentMonthData.education,
+                          percentage: ((currentMonthData.education * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.gifts > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.red.shade50,
+                          image: homeListGifts,
+                          title: "Gifts",
+                          spentMoney: currentMonthData.gifts,
+                          percentage: ((currentMonthData.gifts * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.taxes > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.purple.shade50,
+                          image: homeListTaxes,
+                          title: "Taxes",
+                          spentMoney: currentMonthData.taxes,
+                          percentage: ((currentMonthData.taxes * 100) /
+                              currentMonthData.income),
+                        ),
+                      if (currentMonthData.miscellaneous > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.yellow.shade100,
+                          image: homeListMiscellaneous,
+                          title: "Miscellaneous",
+                          spentMoney: currentMonthData.miscellaneous,
+                          percentage: ((currentMonthData.miscellaneous * 100) /
+                              currentMonthData.income),
+                        ),
                     ],
                   ),
-                );
-              },
-              itemCount: homeListViewItems.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: height * 0.02);
-              },
-            ),
-            SizedBox(
-              height: height * 0.03,
-            ),
-          ],
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: primaryColor,
+        onPressed: () {
+          Get.toNamed(AppRoutes.addIncomeExpenseScreen)?.then(
+            (value) => Provider.of<HomeProvider>(context, listen: false)
+                .getUserIncomeExpense(),
+          );
+        },
+        elevation: 10,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.0),
+          ),
+        ),
+        child: Icon(
+          Icons.add_rounded,
+          size: height * 0.04,
         ),
       ),
     );
@@ -230,6 +301,74 @@ Widget cardColumnTextBuilder({
         text: text2,
         fontWeight: FontWeight.w500,
         fontSize: width * 0.07,
+      ),
+    ],
+  );
+}
+
+Widget monthlyExpenditure({
+  required Color boxDecorationColor,
+  required String image,
+  required String title,
+  required int spentMoney,
+  required double percentage,
+}) {
+  return Column(
+    children: [
+      Container(
+        padding: const EdgeInsets.only(left: 10, right: 20),
+        height: height * 0.08,
+        width: width,
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(5),
+              width: width * 0.15,
+              height: width * 0.15,
+              decoration: BoxDecoration(
+                color: boxDecorationColor,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black26, blurRadius: 2)
+                ],
+              ),
+              child: Image(
+                image: AssetImage(image),
+                width: width * 0.1,
+                height: width * 0.1,
+                fit: BoxFit.scaleDown,
+              ),
+            ),
+            SizedBox(
+              width: width * 0.04,
+            ),
+            customText(
+              color: blackColor,
+              text: title,
+              fontSize: width * 0.06,
+            ),
+            const Spacer(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                customText(
+                  color: blackColor,
+                  text: "$rupeeSymbol $spentMoney",
+                  fontSize: width * 0.06,
+                ),
+                customText(
+                  color: greyColor,
+                  text: "${percentage.toStringAsFixed(2)}%",
+                  fontSize: width * 0.04,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      Divider(
+        color: greyColor,
       ),
     ],
   );

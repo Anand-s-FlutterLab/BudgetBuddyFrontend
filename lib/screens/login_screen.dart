@@ -1,7 +1,6 @@
 import 'package:budget_buddy/core/app_export.dart';
 import 'package:budget_buddy/core/utils/validation_function.dart';
 import 'package:budget_buddy/provider/login_provider.dart';
-import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

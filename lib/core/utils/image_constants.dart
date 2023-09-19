@@ -1,5 +1,7 @@
 String appLogo = "assets/app_logo.png";
 
+String cardBackgroundImage = "assets/cardBackgroundImage.jpg";
+
 String homeListEducation = "assets/Education.png";
 String homeListEntertainment = "assets/Entertainment.png";
 String homeListFood = "assets/Food.png";
