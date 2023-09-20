@@ -12,3 +12,4 @@ String homeListMiscellaneous = "assets/Miscellaneous.png";
 String homeListTaxes = "assets/Taxes.png";
 String homeListTransportation = "assets/Transportation.png";
 String homeListUtilities = "assets/Utilities.png";
+String homeListSalary = "assets/Salary.png";

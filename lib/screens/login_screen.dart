@@ -18,6 +18,7 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Form(
+              key: loginProvider.loginFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -130,10 +131,10 @@ class LoginScreen extends StatelessWidget {
                       obscureText: loginProvider.obscureText,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please provide an Email Address';
+                          return 'Please provide Password';
                         }
                         if (!emailValidator.hasMatch(value)) {
-                          return 'Enter Valid Email';
+                          return 'Enter Valid Password';
                         }
                         return null;
                       },

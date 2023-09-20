@@ -14,6 +14,16 @@ class HomeScreen extends StatelessWidget {
             return Center(
               child: customPageLoadingAnimation(size: height * 0.1),
             );
+          } else if (homeProvider.isMonthlyBudgetEmpty) {
+            return Center(
+              child: customText(
+                text:
+                    "You don't Have any entry\nYou need to enter an entry to see the screen",
+                maxLines: 3,
+                color: primaryColor,
+                fontSize: width * 0.06,
+              ),
+            );
           } else {
             final currentMonthData =
                 homeProvider.monthlyBudget.months[currentMonthYear];
@@ -65,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.black45,
+                            color: Color(0xffc5c5c5),
                             blurRadius: 5,
                             offset: Offset(10, 10),
                           )
@@ -141,7 +151,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Housing",
                           spentMoney: currentMonthData.housing,
                           percentage: ((currentMonthData.housing * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.transportation > 0)
                         monthlyExpenditure(
@@ -150,7 +160,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Transportation",
                           spentMoney: currentMonthData.transportation,
                           percentage: ((currentMonthData.transportation * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.food > 0)
                         monthlyExpenditure(
@@ -159,7 +169,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Food",
                           spentMoney: currentMonthData.food,
                           percentage: ((currentMonthData.food * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.utilities > 0)
                         monthlyExpenditure(
@@ -168,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Utilities",
                           spentMoney: currentMonthData.utilities,
                           percentage: ((currentMonthData.utilities * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.healthcare > 0)
                         monthlyExpenditure(
@@ -177,7 +187,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Healthcare",
                           spentMoney: currentMonthData.healthcare,
                           percentage: ((currentMonthData.healthcare * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.entertainment > 0)
                         monthlyExpenditure(
@@ -186,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Entertainment",
                           spentMoney: currentMonthData.entertainment,
                           percentage: ((currentMonthData.entertainment * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.education > 0)
                         monthlyExpenditure(
@@ -195,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Education",
                           spentMoney: currentMonthData.education,
                           percentage: ((currentMonthData.education * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.gifts > 0)
                         monthlyExpenditure(
@@ -204,7 +214,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Gifts",
                           spentMoney: currentMonthData.gifts,
                           percentage: ((currentMonthData.gifts * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.taxes > 0)
                         monthlyExpenditure(
@@ -213,7 +223,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Taxes",
                           spentMoney: currentMonthData.taxes,
                           percentage: ((currentMonthData.taxes * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                       if (currentMonthData.miscellaneous > 0)
                         monthlyExpenditure(
@@ -222,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                           title: "Miscellaneous",
                           spentMoney: currentMonthData.miscellaneous,
                           percentage: ((currentMonthData.miscellaneous * 100) /
-                              currentMonthData.income),
+                              currentMonthData.expense),
                         ),
                     ],
                   ),
@@ -235,6 +245,8 @@ class HomeScreen extends StatelessWidget {
           }
         },
       ),
+      bottomNavigationBar: const BottomNavigationWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
         onPressed: () {

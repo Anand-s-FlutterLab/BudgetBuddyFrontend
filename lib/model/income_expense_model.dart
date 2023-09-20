@@ -70,7 +70,7 @@ class MonthData {
       income: json['income'],
       expense: json['expense'],
       housing: json['Housing'] ?? 0,
-      transportation: json['Trasportation'] ?? 0,
+      transportation: json['Transportation'] ?? 0,
       food: json['Food'] ?? 0,
       utilities: json['Utilities'] ?? 0,
       healthcare: json['Healthcare'] ?? 0,

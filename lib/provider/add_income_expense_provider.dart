@@ -7,6 +7,8 @@ class AddIncomeExpenseProvider with ChangeNotifier {
   String selectedCategory = "Select Category";
   String entryMonth = "";
 
+  final GlobalKey<FormState> incomeExpenseFormKey = GlobalKey<FormState>();
+
   TextEditingController dateController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -28,31 +30,35 @@ class AddIncomeExpenseProvider with ChangeNotifier {
 
   Future<void> addTransaction(
       {required int income, required int expense}) async {
-    toggleEntry();
-    AddIncomeExpenseModel addIncomeExpenseModel = AddIncomeExpenseModel(
-      monthName: entryMonth,
-      income: income,
-      expense: expense,
-      description: descriptionController.text,
-      category: radioSelectedIndex == 0 ? "Salary" : selectedCategory,
-      amount: int.parse(amountController.text),
-      date: dateController.text,
-    );
-    try {
-      Response response = await Dio().put(
-        "$baseUrl/$incomeExpenseRoute",
-        options: Options(
-          headers: {"Authorization": authToken},
-        ),
-        data: addIncomeExpenseModel.toJson(),
-      );
-      Get.back();
-      customSnackBar("Success", "Transaction Added Successfully", "green");
-      clearData();
-    } on DioException catch (err) {
-      customSnackBar("Error", "${err.response?.data}");
-    } finally {
+    if (radioSelectedIndex != -1) {
       toggleEntry();
+      AddIncomeExpenseModel addIncomeExpenseModel = AddIncomeExpenseModel(
+        monthName: entryMonth,
+        income: income,
+        expense: expense,
+        description: descriptionController.text,
+        category: radioSelectedIndex == 0 ? "Salary" : selectedCategory,
+        amount: int.parse(amountController.text),
+        date: dateController.text,
+      );
+      try {
+        Response response = await Dio().put(
+          "$baseUrl/$incomeExpenseRoute",
+          options: Options(
+            headers: {"Authorization": authToken},
+          ),
+          data: addIncomeExpenseModel.toJson(),
+        );
+        Get.back();
+        customSnackBar("Success", "Transaction Added Successfully", "green");
+        clearData();
+      } on DioException catch (err) {
+        customSnackBar("Error", "${err.response?.data}");
+      } finally {
+        toggleEntry();
+      }
+    } else {
+      customSnackBar("Error", "Please Select Either Income or Expense");
     }
   }
 

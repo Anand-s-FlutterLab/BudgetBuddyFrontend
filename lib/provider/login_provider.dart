@@ -5,6 +5,7 @@ class LoginProvider with ChangeNotifier {
   bool isLogin = false;
   bool obscureText = true;
   late UserModel userModel;
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -19,23 +20,25 @@ class LoginProvider with ChangeNotifier {
   }
 
   Future<void> onLogin() async {
-    loginToggle();
-    try {
-      Response loginUser = await Dio().post(
-        "$baseUrl/$loginRoute",
-        data: {
-          "email": "anand@gmail.com",
-          // "email": emailController.text,
-          // "password": passwordController.text
-          "password": "hello"
-        },
-      );
-      if (loginUser.statusCode == 200) {
-        authToken = "Bearer ${loginUser.data}";
-        getUserData();
+    if(loginFormKey.currentState!.validate()){
+      loginToggle();
+      try {
+        Response loginUser = await Dio().post(
+          "$baseUrl/$loginRoute",
+          data: {
+            "email": "anand@gmail.com",
+            // "email": emailController.text,
+            // "password": passwordController.text
+            "password": "hello"
+          },
+        );
+        if (loginUser.statusCode == 200) {
+          authToken = "Bearer ${loginUser.data}";
+          getUserData();
+        }
+      } on DioException catch (err) {
+        customSnackBar("Error", "${err.response?.data}");
       }
-    } on DioException catch (err) {
-      customSnackBar("Error", "${err.response?.data}");
     }
   }
 

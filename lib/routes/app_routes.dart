@@ -1,8 +1,10 @@
 import 'package:budget_buddy/screens/add_income_expense_screen.dart';
+import 'package:budget_buddy/screens/analysis_screen.dart';
 import 'package:budget_buddy/screens/home_screen.dart';
 import 'package:budget_buddy/screens/login_screen.dart';
 import 'package:budget_buddy/screens/signup_screen.dart';
 import 'package:budget_buddy/screens/splash_screen.dart';
+import 'package:budget_buddy/screens/transction_screen.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -12,6 +14,8 @@ class AppRoutes {
   static String signupScreen = "/signup_screen";
   static String homeScreen = "/home_screen";
   static String addIncomeExpenseScreen = "/add_income_expense_screen";
+  static String transactionScreen = "/transaction_screen";
+  static String analysisScreen = "/analysis_screen";
 
   static List<GetPage> pages = [
     GetPage(
@@ -40,6 +44,18 @@ class AppRoutes {
     GetPage(
       name: addIncomeExpenseScreen,
       page: () => const AddIncomeExpenseScreen(),
+      bindings: const [],
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: transactionScreen,
+      page: () => const TransactionScreen(),
+      bindings: const [],
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: analysisScreen,
+      page: () => const AnalysisScreen(),
       bindings: const [],
       transition: Transition.rightToLeft,
     ),

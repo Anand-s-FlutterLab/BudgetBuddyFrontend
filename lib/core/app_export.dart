@@ -19,3 +19,4 @@ export 'package:budget_buddy/routes/app_routes.dart';
 export 'package:budget_buddy/widgets/custom_text.dart';
 export 'package:budget_buddy/widgets/custom_loading_animation.dart';
 export 'package:budget_buddy/widgets/custom_snackbar.dart';
+export 'package:budget_buddy/widgets/bottom_navigation_widget.dart';
