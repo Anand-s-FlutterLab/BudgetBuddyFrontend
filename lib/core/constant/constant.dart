@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-String baseUrl = "http://10.1.81.120:3000";
+String baseUrl = "https://budget-buddy-backend.vercel.app";
 
 const String userRoute = "user";
 const String loginRoute = "auth/login";

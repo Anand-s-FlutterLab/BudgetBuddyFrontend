@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:animations/animations.dart';
 import 'package:budget_buddy/core/app_export.dart';
-import 'package:budget_buddy/core/utils/date_utils.dart';
 import 'package:budget_buddy/provider/home_provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -43,14 +41,16 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
     Timer(const Duration(milliseconds: 3850), () async {
-      currentMonthYear = getMonthYear(dateTime: DateTime.now());
+      currentMonthYear = changeToMonthYear(dateTime: DateTime.now());
       userName = await readStorage(storageUserName) ?? "";
       authToken = await readStorage(storageAuthToken) ?? "";
       if (authToken.isNotEmpty && userName.isNotEmpty) {
-        Provider.of<HomeProvider>(context, listen: false).getUserIncomeExpense();
-        Get.toNamed(AppRoutes.homeScreen);
+        Provider.of<HomeProvider>(context, listen: false)
+            .getUserIncomeExpense();
+
+        Get.offNamed(AppRoutes.homeScreen);
       } else {
-        Get.toNamed(AppRoutes.loginScreen);
+        Get.offNamed(AppRoutes.loginScreen);
       }
     });
   }
@@ -68,8 +68,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double _h = MediaQuery.of(context).size.height;
-    double _w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: _d
                   ? 0
                   : _a
-                      ? _h / 2
+                      ? h / 2
                       : 20,
               width: width * 0.80,
               // color: Colors.deepPurpleAccent,
@@ -95,12 +95,12 @@ class _SplashScreenState extends State<SplashScreen> {
                           : 0),
               curve: Curves.fastLinearToSlowEaseIn,
               height: _d
-                  ? _h
+                  ? h
                   : _c
                       ? 80
                       : 20,
               width: _d
-                  ? _w
+                  ? w
                   : _c
                       ? width * 0.60
                       : 20,

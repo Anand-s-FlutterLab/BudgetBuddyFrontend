@@ -133,7 +133,7 @@ class LoginScreen extends StatelessWidget {
                         if (value == null || value.isEmpty) {
                           return 'Please provide Password';
                         }
-                        if (!emailValidator.hasMatch(value)) {
+                        if (!passwordValidator.hasMatch(value)) {
                           return 'Enter Valid Password';
                         }
                         return null;
@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      loginProvider.onLogin();
+                      loginProvider.onLogin(context);
                     },
                     child: Container(
                       width: width,

@@ -12,13 +12,14 @@ class HomeScreen extends StatelessWidget {
         builder: (context, homeProvider, child) {
           if (homeProvider.isGettingUserIncomeExpense) {
             return Center(
-              child: customPageLoadingAnimation(size: height * 0.1),
+              child: customPageLoadingAnimation(
+                  size: height * 0.08, color: primaryColor),
             );
           } else if (homeProvider.isMonthlyBudgetEmpty) {
             return Center(
               child: customText(
                 text:
-                    "You don't Have any entry\nYou need to enter an entry to see the screen",
+                    "You don't Have Current Month's Entry\nYou need to enter an entry to see the screen",
                 maxLines: 3,
                 color: primaryColor,
                 fontSize: width * 0.06,
@@ -45,18 +46,25 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: primaryColor,
                         ),
-                        Container(
-                          height: width * 0.12,
-                          width: width * 0.12,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.person_3,
-                            color: blackColor,
-                            size: height * 0.04,
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.profileScreen)?.then(
+                                (value) => selectedBottomNavigationIndex = 0);
+                            selectedBottomNavigationIndex = 3;
+                          },
+                          child: Container(
+                            height: width * 0.12,
+                            width: width * 0.12,
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              color: blackColor,
+                              size: height * 0.04,
+                            ),
                           ),
                         ),
                       ],
@@ -96,7 +104,7 @@ class HomeScreen extends StatelessWidget {
                           customText(
                             color: whiteColor,
                             text:
-                                "$rupeeSymbol ${currentMonthData!.income - currentMonthData.expense}",
+                                "$rupeeSymbol ${numberFormatter(currentMonthData!.income - currentMonthData.expense)}",
                             fontWeight: FontWeight.w500,
                             fontSize: width * 0.08,
                           ),
@@ -107,12 +115,12 @@ class HomeScreen extends StatelessWidget {
                               cardColumnTextBuilder(
                                 text1: "Spent",
                                 text2:
-                                    "$rupeeSymbol ${currentMonthData.expense}",
+                                    "$rupeeSymbol ${numberFormatter(currentMonthData.expense)}",
                               ),
                               cardColumnTextBuilder(
                                 text1: "Income",
                                 text2:
-                                    "$rupeeSymbol ${currentMonthData.income}",
+                                    "$rupeeSymbol ${numberFormatter(currentMonthData.income)}",
                               ),
                             ],
                           ),
@@ -126,15 +134,42 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: width * 0.05),
-                    alignment: Alignment.centerLeft,
-                    child: customText(
-                      color: blackColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: width * 0.06,
-                      text: "Monthly Expenditure",
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: width * 0.05),
+                        alignment: Alignment.centerLeft,
+                        child: customText(
+                          color: blackColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: width * 0.06,
+                          text: "Monthly Expenditure",
+                        ),
+                      ),
+                      if (!homeProvider.isMonthlyBudgetEmpty)
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.addIncomeExpenseScreen)?.then(
+                              (value) => homeProvider.getUserIncomeExpense(),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(right: width * 0.05),
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: AppDecoration.containerBoxDecoration(
+                                color: primaryColor,
+                                borderRadius: 8,
+                              ),
+                              child: Icon(
+                                Icons.add_rounded,
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                   SizedBox(
                     height: height * 0.02,
@@ -144,6 +179,14 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      if (currentMonthData.income > 0)
+                        monthlyExpenditure(
+                          boxDecorationColor: Colors.green.shade50,
+                          image: homeListSalary,
+                          title: "Salary",
+                          spentMoney: currentMonthData.income,
+                          percentage: 100,
+                        ),
                       if (currentMonthData.housing > 0)
                         monthlyExpenditure(
                           boxDecorationColor: Colors.yellow.shade100,
@@ -247,25 +290,28 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: const BottomNavigationWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryColor,
-        onPressed: () {
-          Get.toNamed(AppRoutes.addIncomeExpenseScreen)?.then(
-            (value) => Provider.of<HomeProvider>(context, listen: false)
-                .getUserIncomeExpense(),
-          );
-        },
-        elevation: 10,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12.0),
-          ),
-        ),
-        child: Icon(
-          Icons.add_rounded,
-          size: height * 0.04,
-        ),
-      ),
+      floatingActionButton: Provider.of<HomeProvider>(context)
+              .isMonthlyBudgetEmpty
+          ? FloatingActionButton(
+              backgroundColor: primaryColor,
+              onPressed: () {
+                Get.toNamed(AppRoutes.addIncomeExpenseScreen)?.then(
+                  (value) => Provider.of<HomeProvider>(context, listen: false)
+                      .getUserIncomeExpense(),
+                );
+              },
+              elevation: 10,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12.0),
+                ),
+              ),
+              child: Icon(
+                Icons.add_rounded,
+                size: height * 0.04,
+              ),
+            )
+          : null,
     );
   }
 }
@@ -366,7 +412,7 @@ Widget monthlyExpenditure({
               children: [
                 customText(
                   color: blackColor,
-                  text: "$rupeeSymbol $spentMoney",
+                  text: "$rupeeSymbol ${numberFormatter(spentMoney)}",
                   fontSize: width * 0.06,
                 ),
                 customText(

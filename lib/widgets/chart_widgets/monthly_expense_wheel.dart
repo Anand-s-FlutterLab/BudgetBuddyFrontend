@@ -3,8 +3,8 @@ import 'package:budget_buddy/provider/home_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:budget_buddy/core/app_export.dart';
 
-class PieChartWithTouchIndex extends StatelessWidget {
-  const PieChartWithTouchIndex({super.key});
+class MonthlyExpenseWheelWidget extends StatelessWidget {
+  const MonthlyExpenseWheelWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +26,10 @@ class PieChartWithTouchIndex extends StatelessWidget {
                 PieChartData(
                   sections: List.generate(10, (i) {
                     final isTouched = i == analysisProvider.pieTouchedIndex;
-                    final fontSize = isTouched ? 25.0 : 16.0;
+                    final titlePosition = isTouched ? 0.5 : 1.5;
+                    final fontSize = width * 0.04;
                     final radius = isTouched ? 60.0 : 50.0;
-                    const shadows = [
-                      Shadow(color: Colors.black, blurRadius: 2)
-                    ];
+
                     switch (i) {
                       case 0:
                         final value = valueCalculator(
@@ -42,11 +41,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[0],
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[0],
                           ),
                         );
                       case 1:
@@ -59,11 +58,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[1],
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[1],
                           ),
                         );
                       case 2:
@@ -76,11 +75,12 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: width * 0.04,
-                              color: pieChartColors[2]),
+                            fontWeight: FontWeight.w500,
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[2],
+                          ),
                         );
                       case 3:
                         final value = valueCalculator(
@@ -92,11 +92,12 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: width * 0.04,
-                              color: pieChartColors[3]),
+                            fontWeight: FontWeight.w500,
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[3],
+                          ),
                         );
                       case 4:
                         final value = valueCalculator(
@@ -108,11 +109,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[4],
+                            fontSize: fontSize,
+                            color: isTouched ? blackColor : pieChartColors[4],
                           ),
                         );
                       case 5:
@@ -125,11 +126,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[5],
+                            fontSize: fontSize,
+                            color: isTouched ? blackColor : pieChartColors[5],
                           ),
                         );
                       case 6:
@@ -142,11 +143,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[6],
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[6],
                           ),
                         );
                       case 7:
@@ -159,11 +160,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[7],
+                            fontSize: fontSize,
+                            color: isTouched ? whiteColor : pieChartColors[7],
                           ),
                         );
                       case 8:
@@ -176,11 +177,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[8],
+                            fontSize: fontSize,
+                            color: isTouched ? blackColor : pieChartColors[8],
                           ),
                         );
                       case 9:
@@ -193,11 +194,11 @@ class PieChartWithTouchIndex extends StatelessWidget {
                           value: value == 0 ? 0.01 : value,
                           title: value == 0 ? "" : value.toStringAsFixed(2),
                           radius: radius,
-                          titlePositionPercentageOffset: 1.5,
+                          titlePositionPercentageOffset: titlePosition,
                           titleStyle: AppStyle.textFormFieldStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: width * 0.04,
-                            color: pieChartColors[9],
+                            fontSize: fontSize,
+                            color: isTouched ? blackColor : pieChartColors[9],
                           ),
                         );
                       default:

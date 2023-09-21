@@ -24,7 +24,7 @@ Map<String, dynamic> getTransactionImages(String name) {
       };
     case "Healthcare":
       return {
-        "color": Colors.green.shade500,
+        "color": Colors.green.shade50,
         "image": homeListHealthcare,
       };
     case "Entertainment":

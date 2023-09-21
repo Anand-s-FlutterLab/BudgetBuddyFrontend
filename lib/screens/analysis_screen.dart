@@ -1,9 +1,9 @@
 import 'package:budget_buddy/core/app_export.dart';
 import 'package:budget_buddy/provider/analysis_provider.dart';
 import 'package:budget_buddy/provider/home_provider.dart';
-import 'package:budget_buddy/widgets/chart_widgets/line_chart.dart';
-import 'package:budget_buddy/widgets/chart_widgets/pie_chart.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:budget_buddy/widgets/chart_widgets/balance_waveform.dart';
+import 'package:budget_buddy/widgets/chart_widgets/econograph_explorer.dart';
+import 'package:budget_buddy/widgets/chart_widgets/monthly_expense_wheel.dart';
 
 class AnalysisScreen extends StatelessWidget {
   const AnalysisScreen({super.key});
@@ -12,13 +12,10 @@ class AnalysisScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final analysisProvider = Provider.of<AnalysisProvider>(context);
     final homeProvider = Provider.of<HomeProvider>(context);
-    final monthData =
-        homeProvider.monthlyBudget.months[analysisProvider.currentDate];
 
     List<String> analysisList = [
       "Monthly Expense Wheel",
       "Econograph Explorer",
-      "Savings Spectrum",
       "Balance Waveform",
     ];
 
@@ -140,9 +137,12 @@ class AnalysisScreen extends StatelessWidget {
             SizedBox(
               height: height * 0.03,
             ),
-            if (analysisProvider.currentAnalysis == "Balance Waveform")
-              const LineChartWidget(),
-            PieChartWithTouchIndex(),
+            if (analysisProvider.currentAnalysis == analysisList[2])
+              const BalanceWaveformWidget(),
+            if (analysisProvider.currentAnalysis == analysisList[0])
+              const MonthlyExpenseWheelWidget(),
+            if(analysisProvider.currentAnalysis == analysisList[1])
+              EconographExplorerWidget(),
           ],
         ),
       ),

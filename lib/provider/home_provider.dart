@@ -17,9 +17,14 @@ class HomeProvider with ChangeNotifier {
       );
       if (userData.data == null) {
         isMonthlyBudgetEmpty = true;
+        notifyListeners();
       } else {
         isMonthlyBudgetEmpty = false;
         monthlyBudget = MonthlyBudget.fromJson(userData.data);
+        if (!monthlyBudget.months.keys.contains(currentMonthYear)) {
+          isMonthlyBudgetEmpty = true;
+          notifyListeners();
+        }
       }
     } on DioException catch (err) {
       customSnackBar("Error", "${err.response?.data}");

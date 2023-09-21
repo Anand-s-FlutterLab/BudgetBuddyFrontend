@@ -146,13 +146,16 @@ class TransactionScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              customText(
-                                color: currentTransaction.category != "Salary"
-                                    ? Colors.red.shade700
-                                    : Colors.green.shade700,
-                                text:
-                                    "${currentTransaction.category != "Salary" ? "-" : "+"} $rupeeSymbol${currentTransaction.amount}",
-                                fontSize: width * 0.05,
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: customText(
+                                  color: currentTransaction.category != "Salary"
+                                      ? Colors.red.shade700
+                                      : Colors.green.shade700,
+                                  text:
+                                      "${currentTransaction.category != "Salary" ? "-" : "+"} $rupeeSymbol${numberFormatter(currentTransaction.amount)}",
+                                  fontSize: width * 0.05,
+                                ),
                               ),
                               customText(
                                 color: greyColor,

@@ -3,6 +3,7 @@ import 'package:budget_buddy/provider/add_income_expense_provider.dart';
 import 'package:budget_buddy/provider/analysis_provider.dart';
 import 'package:budget_buddy/provider/home_provider.dart';
 import 'package:budget_buddy/provider/login_provider.dart';
+import 'package:budget_buddy/provider/profile_provider.dart';
 import 'package:budget_buddy/provider/signup_provider.dart';
 import 'package:budget_buddy/provider/transaction_provider.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,12 @@ class BudgetBuddy extends StatelessWidget {
         ChangeNotifierProvider<AnalysisProvider>(
           create: (context) => AnalysisProvider(),
         ),
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (context) => ProfileProvider(),
+        ),
       ],
       child: GetMaterialApp(
+        defaultTransition: Transition.zoom,
         debugShowCheckedModeBanner: false,
         title: 'Budget Buddy',
         getPages: AppRoutes.pages,

@@ -35,7 +35,7 @@ class SignupProvider with ChangeNotifier {
           userName = unameController.text;
           writeStorage(storageAuthToken, authToken);
           writeStorage(storageUserName, unameController.text);
-          Get.toNamed(AppRoutes.homeScreen);
+          Get.offNamed(AppRoutes.homeScreen);
         }
       } on DioException catch (err) {
         customSnackBar("Error", "${err.response?.data}");

@@ -3,8 +3,8 @@ import 'package:budget_buddy/provider/analysis_provider.dart';
 import 'package:budget_buddy/provider/home_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class LineChartWidget extends StatelessWidget {
-  const LineChartWidget({super.key});
+class BalanceWaveformWidget extends StatelessWidget {
+  const BalanceWaveformWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class LineChartWidget extends StatelessWidget {
             touchCallback:
                 (FlTouchEvent event, LineTouchResponse? touchResponse) {},
             touchTooltipData: LineTouchTooltipData(
-              tooltipBgColor: primaryColor,
+              tooltipBgColor: Colors.deepPurple.shade50,
               tooltipRoundedRadius: 8.0,
               showOnTopOfTheChartBoxArea: true,
               fitInsideHorizontally: true,
@@ -32,13 +32,13 @@ class LineChartWidget extends StatelessWidget {
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map(
                   (LineBarSpot touchedSpot) {
-                    const textStyle = TextStyle(
-                      fontSize: 10,
+                    TextStyle textStyle = TextStyle(
+                      fontSize: width * 0.035,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: primaryColor,
                     );
                     return LineTooltipItem(
-                      touchedSpot.y.toStringAsFixed(2),
+                      "$rupeeSymbol ${numberFormatter(touchedSpot.y.toInt())}",
                       // Use touchedSpot to access y-value
                       textStyle,
                     );
@@ -102,7 +102,7 @@ class LineChartWidget extends StatelessWidget {
               gradient: const LinearGradient(
                 colors: [
                   Colors.deepPurple,
-                  Colors.deepPurpleAccent,
+                  Colors.redAccent,
                 ],
               ),
               color: primaryColor,
@@ -112,15 +112,13 @@ class LineChartWidget extends StatelessWidget {
                 gradient: LinearGradient(
                   colors: [
                     Colors.deepPurple.withOpacity(0.4),
-                    Colors.deepPurpleAccent.withOpacity(0.4),
+                    Colors.redAccent.withOpacity(0.4),
                   ],
                 ),
               ),
             ),
           ],
         ),
-        duration: Duration(seconds: 10),
-        curve: Curves.bounceIn,
       ),
     );
   }

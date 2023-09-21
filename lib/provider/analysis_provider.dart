@@ -18,7 +18,6 @@ class AnalysisProvider with ChangeNotifier {
 
   void changePieTouchedIndex(int newTouchIndex) {
     pieTouchedIndex = newTouchIndex;
-    print(pieTouchedIndex);
     notifyListeners();
   }
 
@@ -33,9 +32,7 @@ class AnalysisProvider with ChangeNotifier {
         currentAmount -= transaction.amount;
         amountList.add(currentAmount);
       }
-      print("${transaction.category} ${transaction.amount}");
     }
-    print(amountList);
     return amountList;
   }
 }
