@@ -1,11 +1,15 @@
 import 'package:budget_buddy/core/app_export.dart';
+import 'package:budget_buddy/provider/analysis_provider.dart';
 import 'package:budget_buddy/provider/home_provider.dart';
+import 'package:budget_buddy/provider/transaction_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final transactionProvider = Provider.of<TransactionProvider>(context);
+    final analysisProvider = Provider.of<AnalysisProvider>(context);
     return Scaffold(
       backgroundColor: whiteColor,
       body: Consumer<HomeProvider>(
@@ -16,6 +20,8 @@ class HomeScreen extends StatelessWidget {
                   size: height * 0.08, color: primaryColor),
             );
           } else if (homeProvider.isMonthlyBudgetEmpty) {
+            transactionProvider.changeSelectedTransactionMonth(homeProvider.monthlyBudget.months.keys.first);
+            analysisProvider.changeCurrentDate(homeProvider.monthlyBudget.months.keys.first);
             return Center(
               child: customText(
                 text:
