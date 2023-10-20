@@ -66,19 +66,19 @@ The Budget Buddy Flutter frontend offers a range of features, including:
 ## Screenshots
 
 <p align="center">
-<img src="assets/Screenshots/login.png" width="231" height="500" align="left">
-<img src="assets/Screenshots/signup.png" width="231" height="500" align="center">
-<img src="assets/Screenshots/home.png" width="231" height="500" align="right">
+<img src="assets/screenshots/login.png" width="231" height="500" align="left">
+<img src="assets/screenshots/signup.png" width="231" height="500" align="center">
+<img src="assets/screenshots/home.png" width="231" height="500" align="right">
 </p>
 <br>
 <p align="center">
-<img src="assets/Screenshots/add_entry.png" width="231" height="500" align="left">
-<img src="assets/Screenshots/transaction.png" width="231" height="500" align="center">
-<img src="assets/Screenshots/profile.png" width="231" height="500" align="right">
+<img src="assets/screenshots/add_entry.png" width="231" height="500" align="left">
+<img src="assets/screenshots/transaction.png" width="231" height="500" align="center">
+<img src="assets/screenshots/profile.png" width="231" height="500" align="right">
 </p>
 <br>
 <p align="center">
-<img src="assets/Screenshots/monthly_e_w.png" width="231" height="500" align="left">
-<img src="assets/Screenshots/balance_wave.png" width="231" height="500" align="center">
-<img src="assets/Screenshots/EE.png" width="231" height="500" align="right">
+<img src="assets/screenshots/monthly_e_w.png" width="231" height="500" align="left">
+<img src="assets/screenshots/balance_wave.png" width="231" height="500" align="center">
+<img src="assets/screenshots/EE.png" width="231" height="500" align="right">
 </p>
